@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-sm navbar-dark  fixed-top bg-dark" role="navigation">
+    <a class="navbar-brand" href="#">PIZZA</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" href="home">{{user.name}}</a></li>
+            <li class="nav-item active"><a class="nav-link" href="menu">Menu</a></li>
+            <li class="nav-item"><a class="nav-link" href="order">Order</a></li>
+        </ul>
+    <a class="nav-link"><i class="fas fa-shopping-cart" id="nav"></i></a>
+    <a class="nav-link" href="logout" id="nav"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+    </div>
+</nav>
+<main role="main" class="container">
+    
+    <div class="card-columns">
+        {{#each poducts}}
+        <div class="card" style="witdth: 8rem;">
+            <img class="card-img-top" src="/{{this.image}}" alt="{{this.name}}">
+            <div class="card-body">
+                <h5 class="card-title">{{this.name}}</h5>
+                <p class="card-text">{{this.description}}</p>
+                <label>{{this.price}} </label>
+                <a href="" class="card-link pull-right"><i class="fas fa-cart-plus"></i>Add Cart</a>
+            </div>
+        </div>
+        {{/each}}
+        <div class="card" style="witdth: 8rem;">
+            <img class="card-img-top" src="/" alt="{{this.name}}">
+            <div class="card-body">
+                <h5 class="card-title">Customize</h5>
+                <p class="card-text">Customization</p>
+                <label>$ ? </label>
+                <a href="" class="card-link pull-right"><i class="fas fa-cart-plus"></i>Add Cart</a>
+            </div>
+        </div>
+    </div>
+</main>

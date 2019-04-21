@@ -14,7 +14,7 @@
     "dotenv": "^7.0.0",
     "express": "~4.16.0",
     "express-session": "^1.15.6",
-    "hbs": "^4.0.3",
+    "hbs": "^4.0.4",
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
     "multer": "^1.4.1",
@@ -23,6 +23,7 @@
     "session-file-store": "^1.2.0"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.8.1",
     "eslint": "^5.15.3",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0"
