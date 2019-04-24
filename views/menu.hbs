@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-sm navbar-dark  fixed-top bg-dark" role="navigation">
-    <a class="navbar-brand" href="#">PIZZA</a>
+    <a class="navbar-brand" href="home">PIZZA</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
         aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -10,12 +10,11 @@
             <li class="nav-item active"><a class="nav-link" href="menu">Menu</a></li>
             <li class="nav-item"><a class="nav-link" href="order">Order</a></li>
         </ul>
-    <a class="nav-link"><i class="fas fa-shopping-cart" id="nav"></i></a>
+    <a class="nav-link" ><i class="fas fa-shopping-cart" id="nav"><div class="d-inline ml-1" id="cartCount">{{cartCount}}</div></i></a>
     <a class="nav-link" href="logout" id="nav"><i class="fas fa-sign-out-alt"></i> Log Out</a>
     </div>
 </nav>
 <main role="main" class="container">
-    
     <div class="card-columns">
         {{#each poducts}}
         <div class="card" style="witdth: 8rem;">
@@ -24,7 +23,8 @@
                 <h5 class="card-title">{{this.name}}</h5>
                 <p class="card-text">{{this.description}}</p>
                 <label>{{this.price}} </label>
-                <a href="" class="card-link pull-right"><i class="fas fa-cart-plus"></i>Add Cart</a>
+                <input type="number" name="{{this.id}}" id="{{this.id}}">quantity</input>
+                <button type="button" class="btn btn-link" onclick="addCart({{this.id}}, document.getElementById('{{this.id}}').value*1)"><i class="fas fa-cart-plus"></i>Add Cart</button>
             </div>
         </div>
         {{/each}}
@@ -39,3 +39,5 @@
         </div>
     </div>
 </main>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/javascripts/active.js"></script>

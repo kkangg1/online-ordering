@@ -8,7 +8,7 @@
     <form method="post">
         <div class="form-group">
             <label for="username">Username</label>
-            <input class="form-control" id="username" name="username" onkeyup="check()" autocomplete="off" autofocus="autofocus" />
+            <input class="form-control" id="username" name="username" onkeyup="ck_timeout()" autocomplete="off" autofocus="autofocus" />
             <div id="resultsUsername"></div>
         </div>
         <div class="form-group">
@@ -29,10 +29,11 @@
         </div>
         <div class="form-group">
             <label for="passwordConf">Password Confirmation</label>
-            <input class="form-control" id="passwordConf" type="password" name="passwordConf" onchange='password();' autocomplete="off" autofocus="autofocus"/>
+            <input class="form-control" id="passwordConf" type="password" name="passwordConf" onkeyup='pass();' autocomplete="off" autofocus="autofocus"/>
             <div id="resultsPassword"></div>
         </div>
         <button class="btn btn-primary" type="submit">Submit</button>
+        <a class="btn btn-primary" href="home">Cancel</a>
     </form>
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

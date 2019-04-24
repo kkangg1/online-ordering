@@ -61,6 +61,9 @@ router.post('/login', async (req, res) => {
 
     if (auth) {
       [req.session.user] = selectResult.rows;
+      req.session.cart = [];
+      req.session.cartCount = 0;
+      req.session.nextCartId = 1;
       res.redirect('/');
     } else {
       errors.push('Incorrect username/password');
@@ -82,7 +85,7 @@ router.get('/logout', (req, res) => {
 router.get('/menu', async (req, res) => {
   const selectQuery = 'SELECT * FROM products';
   const selectResult = await db.query(selectQuery);
-  res.render('menu', { poducts: selectResult.rows, user: req.session.user });
+  res.render('menu', { poducts: selectResult.rows, user: req.session.user, cartCount: req.session.cartCount });
 });
 
 module.exports = router;

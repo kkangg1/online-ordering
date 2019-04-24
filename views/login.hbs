@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>User Login</h1><a class="btn btn-success mb-2" href="/users/register">Register Here</a>
+  <h1>User Login</h1><a class="btn btn-success mb-2" href="register">Register Here</a>
   {{#each errors}}
   <div class="alert alert-danger">
     {{this}}
@@ -15,6 +15,7 @@
       <input class="form-control" id="password" type="password" name="password" />
     </div>
     <button class="btn btn-primary" type="submit">Submit</button>
-    <a class="btn btn-primary" href="/users/change_password">Change Password</a>
+    <a class="btn btn-primary" href="change_password">Change Password</a>
+    <a class="btn btn-primary" href="home">Back</a>
   </form>
 </div>
