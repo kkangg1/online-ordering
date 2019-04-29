@@ -13,7 +13,7 @@ async function check() {
 let timeout = null;
 function ck_timeout() {
   clearTimeout(timeout);
-  timeout = setTimeout(check(), 500);
+  timeout = setTimeout(check, 500);
 }
 
 async function pass() {
