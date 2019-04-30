@@ -10,9 +10,13 @@ async function check() {
     document.querySelector('#resultsUsername').innerHTML = formattedResults;
   }
 }
+let timeout = null;
+function ck_timeout() {
+  clearTimeout(timeout);
+  timeout = setTimeout(check, 500);
+}
 
-
-async function password() {
+async function pass() {
   const passwor = $('#password').val();
   const confirmPassword = $('#passwordConf').val();
   document.querySelector('#resultsPassword').innerHTML = '22';
@@ -23,8 +27,10 @@ async function password() {
   document.querySelector('#resultsPassword').innerHTML = formattedResults;
 }
 
-async function addCart() {
-
+async function addCart(id, quantity) {
+  const result = await axios.post('/api/cart', { product_id: id, quantity });
+  console.log("dddd");
+  document.querySelector('#cartCount').innerHTML = result.data.cartCount;
 }
 
 
