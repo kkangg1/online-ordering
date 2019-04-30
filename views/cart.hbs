@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item"><a class="nav-link" href="home">{{user.name}}</a></li>
-            <li class="nav-item active"><a class="nav-link" href="menu">Menu</a></li>
+            <li class="nav-item"><a class="nav-link" href="menu">Menu</a></li>
             <li class="nav-item"><a class="nav-link" href="order">Order</a></li>
         </ul>
     <a class="nav-link" href="cart" ><i class="fas fa-shopping-cart" id="nav"><div class="d-inline ml-1" id="cartCount">{{cartCount}}</div></i></a>
@@ -15,29 +15,19 @@
     </div>
 </nav>
 <main role="main" class="container">
-    <div class="card-columns">
-        {{#each poducts}}
-        <div class="card" style="witdth: 8rem;">
-            <img class="card-img-top" src="/{{this.image}}" alt="{{this.name}}">
-            <div class="card-body">
+        {{#each cart}}
+        <div class="jumbotron">
                 <h5 class="card-title">{{this.name}}</h5>
-                <p class="card-text">{{this.description}}</p>
-                <label>{{this.price}}</label>
-                <input type="number" name="{{this.id}}" id="{{this.id}}">quantity{{req.session.cart}}</input>
-                <button type="button" class="btn btn-link" onclick="addCart({{this.id}},  document.getElementById('{{this.id}}').value*1)"><i class="fas fa-cart-plus"></i>Add Cart</button>
-            </div>
+                <label>quantity</label>
+                <input style="width: 40px;" type="number" name="{{this.id}}" value="{{this.quantity}}" id="{{this.id}}"></input>
+                <label style="pull: right">${{this.price}} </label>
+                <button type="button" class="btn btn-link" onclick="addCart({{this.id}}, document.getElementById('{{this.id}}').value*1)"><i class="fas fa-cart-plus"></i>Add Cart</button>
+                <div>
+                    <label>Subtotal</label>
+                    <label>${{this.subTotal}}</label>
+                </div>
         </div>
         {{/each}}
-        <div class="card" style="witdth: 8rem;">
-            <img class="card-img-top" src="/" alt="{{this.name}}">
-            <div class="card-body">
-                <h5 class="card-title">Customize</h5>
-                <p class="card-text">Customization</p>
-                <label>$ ? </label>
-                <a href="" class="card-link pull-right"><i class="fas fa-cart-plus"></i>Add Cart</a>
-            </div>
-        </div>
-    </div>
 </main>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/javascripts/active.js"></script>

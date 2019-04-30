@@ -88,4 +88,9 @@ router.get('/menu', async (req, res) => {
   res.render('menu', { poducts: selectResult.rows, user: req.session.user, cartCount: req.session.cartCount });
 });
 
+/* Cart */
+router.get('/cart', async (req, res) => {
+  res.render('cart', { cart: req.session.cart, cartCount: req.session.cartCount });
+});
+
 module.exports = router;

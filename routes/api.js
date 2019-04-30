@@ -20,7 +20,8 @@ router.get('/password', async (req, res) => {
 });
 
 router.post('/cart', async (req, res) => {
-  const query = 'SELECT name FROM products WHERE products.id = $1';
+  console.log('fghj');
+  const query = 'SELECT name, price FROM products WHERE products.id = $1';
   const param = [req.body.product_id];
   const result = await db.query(query, param);
   const len = req.session.cart.length;
@@ -28,19 +29,22 @@ router.post('/cart', async (req, res) => {
   for (let i = 0; i < len; i += 1) {
     if (req.session.cart[i].product_id === req.body.product_id) {
       req.session.cart[i].quantity += req.body.quantity;
+      req.session.cart[i].subTotal += req.body.quantity*req.session.cart[i].price;
       tt = false;
     }
   }
+  const num = result.rows[0].price.match(/\d+(.\d+)?/g);
   if (tt) {
     req.session.cart.push({
       cart_id: req.session.nextCartId,
       product_id: req.body.product_id,
       name: result.rows[0].name,
       quantity: req.body.quantity,
+      price: num[0],
+      subTotal: num[0] * req.body.quantity,
     });
     req.session.nextCartId += 1;
   }
-  console.log(len);
   req.session.cartCount += req.body.quantity;
   res.json({
     cartCount: req.session.cartCount,

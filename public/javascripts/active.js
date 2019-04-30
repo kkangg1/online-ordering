@@ -28,43 +28,7 @@ async function pass() {
 }
 
 async function addCart(id, quantity) {
+  console.log('adfafdg');
   const result = await axios.post('/api/cart', { product_id: id, quantity });
-  console.log("dddd");
   document.querySelector('#cartCount').innerHTML = result.data.cartCount;
-}
-
-
-async function search() {
-  document.querySelector('#results').innerHTML = '';
-
-  if (document.querySelector('#query').value) {
-    const results = await axios.get('api/people?q=' + document.querySelector('#query').value);
-    let formattedResults = '';
-
-    results.data.forEach((result) => {
-      formattedResults += '<h1>' + result.first_name + ' ' + result.last_name + '</h1>';
-      formattedResults += '<h2>' + result.major + '</h2>';
-    });
-    document.querySelector('#results').innerHTML = formattedResults;
-  }
-}
-
-async function newPerson() {
-  const post = {
-    uniqueid: document.querySelector('#uniqueid').value,
-    first_name: document.querySelector('#firstName').value,
-    last_name: document.querySelector('#lastName').value,
-    major: document.querySelector('#major').value,
-  };
-
-  const result = await axios.post('api/people', post);
-
-  const newPerson = document.createElement('div');
-  newPerson.innerHTML = result.data.first_name + ' ' + result.data.last_name;
-  document.querySelector('#people').appendChild(newPerson);
-
-  document.querySelector('#uniqueid').value = '';
-  document.querySelector('#firstName').value = '';
-  document.querySelector('#lastName').value = '';
-  document.querySelector('#major').value = '';
 }
