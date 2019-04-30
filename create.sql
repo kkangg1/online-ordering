@@ -37,7 +37,6 @@ CREATE TABLE order_lines (
 
 CREATE TABLE order_line_customizations (
     id serial PRIMARY KEY,
-    customer_id integer REFERENCES customers (id),
     order_line_id integer REFERENCES order_lines (id),
     customization_id integer REFERENCES customizations (id)
 );
@@ -45,7 +44,7 @@ CREATE TABLE cart (
     id serial PRIMARY KEY,
     order_line_id integer REFERENCES order_lines (id),
     product_id integer REFERENCES products(id),
-    quantity integer,
+    quantity integer
 );
 
 INSERT INTO customers VALUES (1, 'Michael Beck', 'beckmd', 'beckmd@miamioh.edu', '$2b$10$qtcZLq9ouJrwPn8jGSmcku1JKo2bWr9BGKH6LE37mll2ehdfIdFcS');

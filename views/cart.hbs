@@ -1,0 +1,9 @@
+<p>Cart Count: <span id="cartCount>{{cartCount}}"></span></p>
+
+<ul>
+{{#each cart}}
+<li>{{this.name}} - {{this.quantity}}</li>
+    {{#if this.customizations}}
+    {{#each this.customizations}}
+{{/each}}
+</ul>

@@ -15,7 +15,6 @@
     </div>
 </nav>
 <main role="main" class="container">
-    
     <div class="card-columns">
         {{#each poducts}}
         <div class="card" style="witdth: 8rem;">
@@ -29,13 +28,31 @@
         </div>
         {{/each}}
         <div class="card" style="witdth: 8rem;">
-            <img class="card-img-top" src="/" alt="{{this.name}}">
+            <img class="card-img-top" src="/images/veggie.jpg" alt="{{this.name}}">
             <div class="card-body">
                 <h5 class="card-title">Customize</h5>
                 <p class="card-text">Customization</p>
-                <label>$ ? </label>
+
                 <a href="" class="card-link pull-right"><i class="fas fa-cart-plus"></i>Add Cart</a>
             </div>
         </div>
     </div>
 </main>
+<div class="container">
+    <div id="cartCount">{{cartCount}}</div>
+    {{#each products}}
+        <p>{{this.name}}</p>
+        <button type="button" class="btn btn-primary" 
+        onclick="addToCart({{this.id}}, 1)">Add to Cart</button>
+        <img src="{{this.image}}" width="200" alt="{{this.name}}">
+    {{/each}}
+    <h2>Build your own!</h2>
+    {{#each customizations}}
+        <input type="checkbox" value="{{this.id}}">
+        <label>{{this.name}}</label>
+    {{/each}}
+    <button type="button" onlick="addCustomPizza(1)">Add Custom Pizza</button>
+    <br>
+</div>
+<script src="http://unpkg.com/axios/dist/axios.min.js"></script>
+<script src='/javascripts/cart.js'></script>

@@ -53,14 +53,18 @@ router.post('/register', async (req, res) => {
 /* User Log In. */
 router.post('/login', async (req, res) => {
   const errors = [];
-
+  
   const selectQuery = 'SELECT * FROM customers WHERE username = $1';
   const selectResult = await db.query(selectQuery, [req.body.username]);
   if (selectResult.rows.length === 1) {
     const auth = await bcrypt.compare(req.body.password, selectResult.rows[0].password);
 
     if (auth) {
-      [req.session.user] = selectResult.rows;
+      [req.session.customer] = selectResult.rows;
+      
+  req.session.cart = [];
+  req.session.cartCount = 0;
+  req.session.nextCartId = 1;
       res.redirect('/');
     } else {
       errors.push('Incorrect username/password');
