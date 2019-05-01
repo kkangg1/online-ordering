@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-sm navbar-dark  fixed-top bg-dark" role="navigation">
+    <a class="navbar-brand" href="home">PIZZA</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" href="home">{{user.name}}</a></li>
+            <li class="nav-item"><a class="nav-link" href="menu">Menu</a></li>
+            <li class="nav-item active"><a class="nav-link" href="order">Order</a></li>
+        </ul>
+    <a class="nav-link" href="cart" ><i class="fas fa-shopping-cart" id="nav"><div class="d-inline ml-1" id="cartCount">{{cartCount}}</div></i></a>
+    <a class="nav-link" href="logout" id="nav"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+    </div>
+</nav>
+
+
+<main role="main" class="container">
+          {{#each order}}
+      <div class="jumbotron">
+          <div><label>Order Number</label></div>
+      </div>
+          {{/each}}
+</main>

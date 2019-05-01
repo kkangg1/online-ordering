@@ -19,7 +19,6 @@ function ck_timeout() {
 async function pass() {
   const passwor = $('#password').val();
   const confirmPassword = $('#passwordConf').val();
-  document.querySelector('#resultsPassword').innerHTML = '22';
   let formattedResults = '';
   if (passwor !== confirmPassword) {
     formattedResults += '<div class="alert alert-danger"> That username is already taken.</div>';
@@ -28,7 +27,40 @@ async function pass() {
 }
 
 async function addCart(id, quantity) {
-  console.log('adfafdg');
   const result = await axios.post('/api/cart', { product_id: id, quantity });
   document.querySelector('#cartCount').innerHTML = result.data.cartCount;
+}
+
+async function addCustom(quantity) {
+  console.log(quantity);
+  const checkBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+  const customizations = [];
+  for (let i = 0; i < checkBoxes.length; i += 1) {
+    customizations.push(checkBoxes[i].value);
+  }
+  const customPrice = 8 + checkBoxes.length;
+  const id = await axios.post('/api/custom', { customizations, customPrice });
+  console.log(id.data.custom_id);
+  console.log(customizations);
+  const result = await axios.post('/api/cart', { product_id: id.data.custom_id, quantity, customizations });
+  document.querySelector('#cartCount').innerHTML = result.data.cartCount;
+}
+
+async function changeCart(id) {
+  const quantity = document.getElementById(id).value;
+  const result = await axios.post('/api/changeCart', { cart_id: id, quantity });
+  const str = '#subTotal' + id;
+  console.log(result.data.cart);
+  let totalPrice = 0;
+  for (let i = 0; i < result.data.cart.length; i += 1) {
+    totalPrice += result.data.cart[i].subTotal;
+  }
+  document.querySelector('#cartCount').innerHTML = result.data.cartCount;
+  document.querySelector('#totalPrice').innerHTML = 'Total price is $' + totalPrice;
+  document.querySelector(str).innerHTML = '$' + result.data.cart[id-1].subTotal;
+}
+
+function timmer(id) {
+  clearTimeout(timeout);
+  timeout = setTimeout(() => { changeCart(id); }, 500);
 }

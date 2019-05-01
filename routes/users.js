@@ -83,14 +83,31 @@ router.get('/logout', (req, res) => {
 
 /* Menu */
 router.get('/menu', async (req, res) => {
-  const selectQuery = 'SELECT * FROM products';
+  const selectQuery = 'SELECT * FROM products WHERE category NOT IN (custom)';
+  const selectCustomizationQuery = 'SELECT * FROM customizations';
   const selectResult = await db.query(selectQuery);
-  res.render('menu', { poducts: selectResult.rows, user: req.session.user, cartCount: req.session.cartCount });
+  const selectCustomizationResult = await db.query(selectCustomizationQuery);
+  console.log(selectResult.rows);
+  res.render('menu', {
+    poducts: selectResult.rows,
+    user: req.session.user,
+    cartCount: req.session.cartCount,
+    customizations: selectCustomizationResult.rows,
+  });
 });
 
 /* Cart */
 router.get('/cart', async (req, res) => {
-  res.render('cart', { cart: req.session.cart, cartCount: req.session.cartCount });
+  let totalPrice = 0;
+  for (let i = 0; i < req.session.cart.length; i += 1) {
+    totalPrice += req.session.cart[i].subTotal;
+  }
+  res.render('cart', { cart: req.session.cart, cartCount: req.session.cartCount, totalPrice });
+});
+
+/* Cart */
+router.get('/order', async (req, res) => {
+  res.render('order', { cart: req.session.cart, cartCount: req.session.cartCount });
 });
 
 module.exports = router;

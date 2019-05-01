@@ -10,8 +10,10 @@
             <li class="nav-item active"><a class="nav-link" href="menu">Menu</a></li>
             <li class="nav-item"><a class="nav-link" href="order">Order</a></li>
         </ul>
-    <a class="nav-link" href="cart" ><i class="fas fa-shopping-cart" id="nav"><div class="d-inline ml-1" id="cartCount">{{cartCount}}</div></i></a>
-    <a class="nav-link" href="logout" id="nav"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+        <a class="nav-link" href="cart"><i class="fas fa-shopping-cart" id="nav">
+                <div class="d-inline ml-1" id="cartCount">{{cartCount}}</div>
+            </i></a>
+        <a class="nav-link" href="logout" id="nav"><i class="fas fa-sign-out-alt"></i> Log Out</a>
     </div>
 </nav>
 <main role="main" class="container">
@@ -23,18 +25,37 @@
                 <h5 class="card-title">{{this.name}}</h5>
                 <p class="card-text">{{this.description}}</p>
                 <label>{{this.price}}</label>
-                <input type="number" name="{{this.id}}" id="{{this.id}}">quantity{{req.session.cart}}</input>
-                <button type="button" class="btn btn-link" onclick="addCart({{this.id}},  document.getElementById('{{this.id}}').value*1)"><i class="fas fa-cart-plus"></i>Add Cart</button>
+                <div>
+                    <label>quantity: </label>
+                    <input style="width: 40px;" type="number" name="{{this.id}}" id="{{this.id}}" value="0"></input>
+                </div>
+                <button type="button" class="btn btn-link"
+                    onclick="addCart({{this.id}},  document.getElementById('{{this.id}}').value*1)"><i
+                        class="fas fa-cart-plus"></i>Add Cart</button>
             </div>
         </div>
         {{/each}}
         <div class="card" style="witdth: 8rem;">
             <img class="card-img-top" src="/" alt="{{this.name}}">
             <div class="card-body">
-                <h5 class="card-title">Customize</h5>
-                <p class="card-text">Customization</p>
-                <label>$ ? </label>
-                <a href="" class="card-link pull-right"><i class="fas fa-cart-plus"></i>Add Cart</a>
+                <h5 class="card-title">Custom Pizza</h5>
+                <p class="card-text">
+                    {{#each customizations}}
+                    <div>
+                        <input type="checkbox" name="" id="" value="{{this.id}}">
+                        <label>{{this.name}}</label>
+                        <label class="pull-right">$1</label>
+                    </div>
+                    {{/each}}
+                </p>
+                <label>$8 </label>
+                <div>
+                    <label>quantity: </label>
+                    <input style="width: 40px;" type="number" name="custom" id="custom"></input>
+                </div>
+                <button type="button" class="btn btn-link"
+                    onclick="addCustom(document.getElementById('custom').value*1)"><i
+                        class="fas fa-cart-plus"></i>Add Cart</button>
             </div>
         </div>
     </div>

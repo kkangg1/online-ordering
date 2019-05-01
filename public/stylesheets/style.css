@@ -14,3 +14,14 @@ li {
   display: list-item;
   text-align: -webkit-match-parent;
 }
+.totalPrice{
+  border: solid 2px gray;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 5px;
+  max-width: 65rem;
+  display: flow-root;
+}
+.aa{
+  max-width: 65rem;
+}
