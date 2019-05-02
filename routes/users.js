@@ -83,9 +83,9 @@ router.get('/logout', (req, res) => {
 
 /* Menu */
 router.get('/menu', async (req, res) => {
-  const selectQuery = 'SELECT * FROM products WHERE category NOT IN (custom)';
+  const selectQuery = 'SELECT * FROM products WHERE NOT category = $1';
   const selectCustomizationQuery = 'SELECT * FROM customizations';
-  const selectResult = await db.query(selectQuery);
+  const selectResult = await db.query(selectQuery, ['custom']);
   const selectCustomizationResult = await db.query(selectCustomizationQuery);
   console.log(selectResult.rows);
   res.render('menu', {
