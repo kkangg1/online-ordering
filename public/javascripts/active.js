@@ -92,3 +92,7 @@ function timmer(id) {
   clearTimeout(timeout);
   timeout = setTimeout(() => { changeCart(id); }, 500);
 }
+
+async function placeOrder() {
+  const result = await axios.post('/api/placeOrder');
+}
