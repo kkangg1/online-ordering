@@ -74,7 +74,7 @@ router.post('/changeCart', async (req, res) => {
     if (req.body.cart_id === req.session.cart[i].cart_id) {
       count -= req.session.cart[i].quantity;
       req.session.cart[i].quantity = req.body.quantity;
-      req.session.cart[i].subTotal = req.session.cart[i].price * req.body.quantity;
+      req.session.cart[i].subTotal = (req.session.cart[i].price * req.body.quantity).toFixed(2)*1;
       count += req.body.quantity * 1;
     }
   }
