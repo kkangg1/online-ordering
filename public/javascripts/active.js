@@ -47,17 +47,45 @@ async function addCustom(quantity) {
 }
 
 async function changeCart(id) {
-  const quantity = document.getElementById(id).value;
-  const result = await axios.post('/api/changeCart', { cart_id: id, quantity });
+  const quantity = document.getElementById(id).value * 1;
+  let result = '';
+  if (quantity === 0) {
+    result = await axios.post('/api/removeCart', { cart_id: id });
+    document.querySelector('#delet' + id).innerHTML = '';
+  } else {
+    result = await axios.post('/api/changeCart', { cart_id: id, quantity });
+  }
   const str = '#subTotal' + id;
   console.log(result.data.cart);
   let totalPrice = 0;
   for (let i = 0; i < result.data.cart.length; i += 1) {
     totalPrice += result.data.cart[i].subTotal;
+    if (result.data.cart[i].cart_id === id) {
+      document.querySelector(str).innerHTML = '$' + result.data.cart[i].subTotal;
+    }
   }
   document.querySelector('#cartCount').innerHTML = result.data.cartCount;
-  document.querySelector('#totalPrice').innerHTML = 'Total price is $' + totalPrice;
-  document.querySelector(str).innerHTML = '$' + result.data.cart[id-1].subTotal;
+  document.querySelector('#totalPrice').innerHTML = 'Total price is $' + totalPrice.toFixed(2) * 1;
+}
+async function removeAllCart() {
+  console.log('tt');
+  const result = await axios.post('/api/removeAllCart');
+  console.log('gg');
+  document.querySelector('#cart').innerHTML = '';
+  const totalPrice = 0;
+  document.querySelector('#cartCount').innerHTML = result.data.cartCount;
+  document.querySelector('#totalPrice').innerHTML = 'Total price is $' +  totalPrice;
+}
+
+async function removeCart(id) {
+  const result = await axios.post('/api/removeCart', { cart_id: id });
+  document.querySelector('#delet' + id).innerHTML = '';
+  let totalPrice = 0;
+  for (let i = 0; i < result.data.cart.length; i += 1) {
+    totalPrice += result.data.cart[i].subTotal;
+  }
+  document.querySelector('#cartCount').innerHTML = result.data.cartCount;
+  document.querySelector('#totalPrice').innerHTML = 'Total price is $' + totalPrice.toFixed(2) * 1;
 }
 
 function timmer(id) {

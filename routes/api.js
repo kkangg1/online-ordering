@@ -52,9 +52,9 @@ router.post('/cart', async (req, res) => {
       cart_id: req.session.nextCartId,
       product_id: req.body.product_id,
       name: result.rows[0].name,
-      quantity: req.body.quantity,
+      quantity: req.body.quantity * 1,
       price: num[0],
-      subTotal: num[0] * req.body.quantity,
+      subTotal: num[0] * req.body.quantity.toFixed(2) * 1,
       customdetail: custom,
     });
     req.session.nextCartId += 1;
@@ -69,12 +69,11 @@ router.post('/cart', async (req, res) => {
 router.post('/changeCart', async (req, res) => {
   const len = req.session.cart.length;
   let count = req.session.cartCount;
-  console.log(req.body.cart_id);
   for (let i = 0; i < len; i += 1) {
     if (req.body.cart_id === req.session.cart[i].cart_id) {
       count -= req.session.cart[i].quantity;
-      req.session.cart[i].quantity = req.body.quantity;
-      req.session.cart[i].subTotal = (req.session.cart[i].price * req.body.quantity).toFixed(2)*1;
+      req.session.cart[i].quantity = req.body.quantity * 1;
+      req.session.cart[i].subTotal = (req.session.cart[i].price * req.body.quantity).toFixed(2) * 1;
       count += req.body.quantity * 1;
     }
   }
@@ -86,6 +85,31 @@ router.post('/changeCart', async (req, res) => {
   });
 });
 
+router.post('/removeCart', async (req, res) => {
+  console.log(req.session.cart[req.body.cart_id]);
+  for (let i = 0; i < req.session.cart.length; i += 1) {
+    if (req.session.cart[i].cart_id === req.body.cart_id) {
+      req.session.cartCount -= req.session.cart[i].quantity;
+      req.session.cart.splice(i, 1);
+    }
+  }
+  res.json({
+    cartCount: req.session.cartCount,
+    cart: req.session.cart,
+  });
+});
+
+router.post('/removeAllCart', async (req, res) => {
+  console.log(req.session.cart);
+  req.session.cart.length = 0;
+  req.session.cartCount = 0;
+  res.json({
+    cartCount: req.session.cartCount,
+    cart: req.session.cart,
+  });
+  console.log('ff');
+  console.log(req.session.cart);
+});
 router.post('/custom', async (req, res) => {
   let description = '';
   for (let i = 0; i < req.body.customizations.length; i += 1) {

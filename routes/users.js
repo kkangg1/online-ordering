@@ -12,8 +12,8 @@ router.get('/home', async (req, res) => {
   if (req.session.user) {
     res.render('userhome', { user: req.session.user });
   } else {
-    const selectQuery = 'SELECT * FROM products';
-    const selectResult = await db.query(selectQuery);
+    const selectQuery = 'SELECT * FROM products WHERE NOT category = $1';
+    const selectResult = await db.query(selectQuery, ['custom']);
     res.render('homePage', { poducts: selectResult.rows });
   }
 });
@@ -87,7 +87,7 @@ router.get('/menu', async (req, res) => {
   const selectCustomizationQuery = 'SELECT * FROM customizations';
   const selectResult = await db.query(selectQuery, ['custom']);
   const selectCustomizationResult = await db.query(selectCustomizationQuery);
-  console.log(selectResult.rows);
+  console.log(req.session.cart);
   res.render('menu', {
     poducts: selectResult.rows,
     user: req.session.user,
@@ -102,6 +102,7 @@ router.get('/cart', async (req, res) => {
   for (let i = 0; i < req.session.cart.length; i += 1) {
     totalPrice += req.session.cart[i].subTotal;
   }
+  totalPrice = totalPrice.toFixed(2) * 1;
   res.render('cart', { cart: req.session.cart, cartCount: req.session.cartCount, totalPrice });
 });
 

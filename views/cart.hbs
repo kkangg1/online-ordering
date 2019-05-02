@@ -19,26 +19,33 @@
 <main role="main" class="container">
     <div class="totalPrice">
         <div class="pull-left" id="totalPrice">Total price is ${{totalPrice}}</div>
-        <div class="pull-right"><button type="button" style="" class="btn btn-link" onclick="">Please Order</button></div>
-    </div>
-
-
-    {{#each cart}}
-    <div class="jumbotron aa">
-        <h5 class="card-title">{{this.name}}</h5>
-        <p>{{this.customdetail}}</p>
-        <label>quantity</label>
-        <input style="width: 40px;" oninput="timmer({{this.cart_id}})" type="number" name="{{this.cart_id}}" value="{{this.quantity}}" id="{{this.cart_id}}"></input>
-        <label style="pull: right">${{this.price}} </label>
-        <button type="button" class="btn btn-link"
-            onclick="addCart({{this.cart_id}}, document.getElementById('{{this.cart_id}}').value*1)"><i
-                class="fas fa-cart-plus"></i>Add Cart</button>
-        <div>
-            <label>Subtotal</label>
-            <label id="subTotal{{this.cart_id}}">${{this.subTotal}}</label>
+        <div class="pull-right"><button type="button" style="" class="btn btn-link" onclick="">Please Order</button>
         </div>
     </div>
-    {{/each}}
+
+
+    <div id="cart">
+        {{#each cart}}
+        <div id="delet{{this.cart_id}}">
+            <div class="jumbotron aa">
+                <h5 class="card-title">{{this.name}}</h5>
+                <p>{{this.customdetail}}</p>
+                <label>quantity</label>
+                <input style="width: 40px;" oninput="timmer({{this.cart_id}})" type="number" name="{{this.cart_id}}"
+                    value="{{this.quantity}}" id="{{this.cart_id}}"></input>
+                <label style="pull: right">${{this.price}} </label>
+                <button type="button" class="btn btn-link" onclick="removeCart({{this.cart_id}})"><i
+                        class="fas fa-cart-plus"></i>Remove</button>
+                <div>
+                    <label>Subtotal</label>
+                    <label id="subTotal{{this.cart_id}}">${{this.subTotal}}</label>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        <button type="button" class="btn btn-link" onclick="removeAllCart()"><i class="fas fa-cart-plus"></i>Remove
+            All</button>
+    <div>
 </main>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/javascripts/active.js"></script>
