@@ -20,21 +20,25 @@
 
 <main role="main" class="container">
     {{#each order}}
-    <div class="jumbotron" style="display: flex;">
-        <div>
-            <label >Order Number: {{this.id}}</label>
-            <label> Total Price: ${{this.totalPrice}}</label>
-            
+    <div class="jumbotron " style="display: flex;">
+        <div class="container">
+            <div style="padding: 10px; width: 100%;">
+                    <label>Order Number: {{this.id}}</label>
+                    <label class="pull-right"> Total Price: ${{this.totalPrice}}</label>
+                
+                <div> {{this.date}}</div>
+                <button type="button" class="btn btn-link" onclick="">Cancel Order</button>
+            </div>
+            {{#each this.order}}
+            <div class="float-left" style="padding: 10px; min-width: 200px;">
+                <h5>{{this.name}}</h5>
+                {{#if this.custom}}
+                <div>Custom: {{this.custom}}</div>
+                {{/if}}
+                <div>Quantity{{this.quantity}} Price: {{this.price}}</div>
+            </div>
+            {{/each}}
         </div>
-        {{#each this.order}}
-        <div class="float-left" style="padding: 10px;">
-            <h5>{{this.name}}</h5>
-            {{#if this.custom}}
-            <div>Custom: {{this.custom}}</div>
-            {{/if}}
-            <div>Quantity{{this.quantity}} Price: {{this.price}}</div>
-        </div>
-        {{/each}}
     </div>
     {{/each}}
 </main>

@@ -36,14 +36,14 @@ async function addCustom(quantity) {
   const checkBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
   const customizations = [];
   for (let i = 0; i < checkBoxes.length; i += 1) {
+    checkBoxes[i].checked = false;
     customizations.push(checkBoxes[i].value);
   }
   const customPrice = 8 + checkBoxes.length;
   const id = await axios.post('/api/custom', { customizations, customPrice });
-  console.log(id.data.custom_id);
-  console.log(customizations);
   const result = await axios.post('/api/cart', { product_id: id.data.custom_id, quantity, customizations });
   document.querySelector('#cartCount').innerHTML = result.data.cartCount;
+
 }
 
 async function changeCart(id) {

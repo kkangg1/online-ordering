@@ -33,7 +33,7 @@
                 <label>quantity</label>
                 <input style="width: 40px;" oninput="timmer({{this.cart_id}})" type="number" name="{{this.cart_id}}"
                     value="{{this.quantity}}" id="{{this.cart_id}}"></input>
-                <label style="pull: right">${{this.price}} </label>
+                <label>${{this.price}} </label>
                 <button type="button" class="btn btn-link" onclick="removeCart({{this.cart_id}})"><i
                         class="fas fa-cart-plus"></i>Remove</button>
                 <div>
