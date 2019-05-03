@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 const express = require('express');
 const db = require('../db');
 
@@ -111,7 +112,7 @@ router.post('/removeAllCart', async (req, res) => {
   console.log(req.session.cart);
 });
 router.post('/custom', async (req, res) => {
-  let description = '';
+  let description = ' ';
   for (let i = 0; i < req.body.customizations.length; i += 1) {
     description += ' ' + req.body.customizations[i];
   }
@@ -127,30 +128,34 @@ router.post('/custom', async (req, res) => {
 });
 
 router.post('/placeOrder', async (req, res) => {
-  console.log(req.session.user.id);
   const order = await db.query('INSERT INTO orders (customer_id) VALUES ($1) RETURNING id', [
     req.session.user.id,
   ]);
-  console.log(req.session.cart);
   for (let i = 0; i < req.session.cart.length; i += 1) {
-    const orderLine = db.query('INSERT INTO order_lines (order_id, product_id, quantity, price ) VALUES ($1, $2, $3, $4 )  RETURNING id', [
+    // eslint-disable-next-line no-await-in-loop
+    const orderLine = await db.query('INSERT INTO order_lines (order_id, product_id, quantity, price ) VALUES ($1, $2, $3, $4 ) RETURNING id', [
       order.rows[0].id,
       req.session.cart[i].product_id,
       req.session.cart[i].quantity,
       req.session.cart[i].subTotal,
     ]);
     if (req.session.cart[i].customdetail !== '') {
-      const custom = db.query('SELECT description FROM products WHERE products.id = $1', [
+      console.log('2');
+      const custom = await db.query('SELECT description FROM products WHERE products.id = $1', [
         req.session.cart[i].product_id,
       ]);
-      console.log(req.session.cart);
       const customizations = custom.rows[0].description.split(' ');
+      console.log('3');
       for (let j = 0; j < customizations.length; j += 1) {
         const value = customizations[j] * 1;
-        db.query('INSERT INTO order_line_customizations (order_line_id, customization_id ) VALUES ($1, $2 )', [
-          orderLine.rows[0].id,
-          value,
-        ]);
+        if (value !== 0) {
+          console.log(value);
+          await db.query('INSERT INTO order_line_customizations (customer_id, order_line_id, customization_id ) VALUES ($1, $2, $3)', [
+            req.session.user.id,
+            orderLine.rows[0].id,
+            value,
+          ]);
+        }
       }
     }
   }
