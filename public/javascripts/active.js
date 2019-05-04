@@ -32,18 +32,22 @@ async function addCart(id, quantity) {
 }
 
 async function addCustom(quantity) {
-  console.log(quantity);
   const checkBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
-  const customizations = [];
-  for (let i = 0; i < checkBoxes.length; i += 1) {
-    checkBoxes[i].checked = false;
-    customizations.push(checkBoxes[i].value);
+  if (checkBoxes.length === 0) {
+    document.querySelector('#customOption').innerHTML = '<div class="alert alert-danger"> Please select at least one option </div>';
+    console.log('checkBoxes');
+  } else {
+    console.log('hhh');
+    const customizations = [];
+    for (let i = 0; i < checkBoxes.length; i += 1) {
+      checkBoxes[i].checked = false;
+      customizations.push(checkBoxes[i].value);
+    }
+    const customPrice = 8 + checkBoxes.length;
+    const id = await axios.post('/api/custom', { customizations, customPrice });
+    const result = await axios.post('/api/cart', { product_id: id.data.custom_id, quantity, customizations });
+    document.querySelector('#cartCount').innerHTML = result.data.cartCount;
   }
-  const customPrice = 8 + checkBoxes.length;
-  const id = await axios.post('/api/custom', { customizations, customPrice });
-  const result = await axios.post('/api/cart', { product_id: id.data.custom_id, quantity, customizations });
-  document.querySelector('#cartCount').innerHTML = result.data.cartCount;
-
 }
 
 async function changeCart(id) {
@@ -68,13 +72,13 @@ async function changeCart(id) {
   document.querySelector('#totalPrice').innerHTML = 'Total price is $' + totalPrice.toFixed(2) * 1;
 }
 async function removeAllCart() {
-  console.log('tt');
+  console.log('4');
   const result = await axios.post('/api/removeAllCart');
   console.log('gg');
   document.querySelector('#cart').innerHTML = '';
   const totalPrice = 0;
   document.querySelector('#cartCount').innerHTML = result.data.cartCount;
-  document.querySelector('#totalPrice').innerHTML = 'Total price is $' +  totalPrice;
+  document.querySelector('#totalPrice').innerHTML = 'Total price is $' + totalPrice;
 }
 
 async function removeCart(id) {
@@ -94,5 +98,10 @@ function timmer(id) {
 }
 
 async function placeOrder() {
-  const result = await axios.post('/api/placeOrder');
+  const a = await axios.post('/api/placeOrder');
+  const result = await axios.post('/api/removeAllCart');
+  window.location.href = 'order';
 }
+/**
+ * 
+ */
