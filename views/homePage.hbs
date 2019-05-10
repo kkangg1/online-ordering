@@ -16,9 +16,8 @@
 <main role="main" class="container">
     <div class="carousel slide" data-ride="carousel" style="max-width: 680px; hight:30rem; margin: auto;">
         <div class="carousel-inner" role="listbox">
-            <div class="carousel-item active" style="style: padding-bottom: 30rem;" ><div class="container"></div></div>
             {{#each poducts}}
-            <div class="carousel-item">
+            <div class="carousel-item {{this.active}}">
                 <img class="d-block w-100" style="margin: auto;" src="/{{this.image}}" alt="slide">
             </div>
             {{/each}}
@@ -32,8 +31,10 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
+        {{#each product}}
+        <h2>{{this.category}}hh</h2>
     <div class="card-columns mt-4" >
-        {{#each poducts}}
+        {{#each this.product}}
         <div class="card" style="witdth: 8rem;">
             <img class="card-img-top" src="/{{this.image}}" alt="{{this.name}}">
             <div class="card-body">
@@ -45,4 +46,5 @@
         </div>
         {{/each}}
     </div>
+        {{/each}}
 </main>

@@ -12,9 +12,35 @@ router.get('/home', async (req, res) => {
   if (req.session.user) {
     res.render('userhome', { user: req.session.user });
   } else {
-    const selectQuery = 'SELECT * FROM products WHERE NOT category = $1';
+    const selectQuery = 'SELECT * FROM products WHERE NOT category = $1 ORDER BY id DESC LIMIT 2';
     const selectResult = await db.query(selectQuery, ['custom']);
-    res.render('homePage', { poducts: selectResult.rows });
+    const query = 'SELECT * FROM products WHERE NOT category = $1 ORDER BY category';
+    const result = await db.query(query, ['custom']);
+    const len = result.rows.length;
+    let current = result.rows[0].category;
+    let product = [];
+    const products = [];
+    for (let i = 0; i < len; i += 1) {
+      if (current === result.rows[i].category) {
+        product.push(result.rows[i]);
+      } else {
+        products.push({
+          category: current,
+          product,
+        });
+        current = result.rows[i].category;
+        product = [];
+        product.push(result.rows[i]);
+      }
+    }
+    products.push({
+      category: current,
+      product,
+    });
+    selectResult.rows[0].active = 'active';
+
+    // res.render('layout', { title: 'hgjc' });
+    res.render('homePage', { product: products, poducts: selectResult.rows });
   }
 });
 router.get('/login', (req, res) => {
@@ -86,10 +112,30 @@ router.get('/menu', async (req, res) => {
   const selectQuery = 'SELECT * FROM products WHERE NOT category = $1';
   const selectCustomizationQuery = 'SELECT * FROM customizations';
   const selectResult = await db.query(selectQuery, ['custom']);
-  const selectCustomizationResult = await db.query(selectCustomizationQuery);
-  console.log(req.session.cart);
+  const selectCustomizationResult = await db.query(selectCustomizationQuery); 
+  const len = selectResult.rows.length;
+  let current = selectResult.rows[0].category;
+  let product = [];
+  const products = [];
+  for (let i = 0; i < len; i += 1) {
+    if (current === selectResult.rows[i].category) {
+      product.push(selectResult.rows[i]);
+    } else {
+      products.push({
+        category: current,
+        product,
+      });
+      current = selectResult.rows[i].category;
+      product = [];
+      product.push(selectResult.rows[i]);
+    }
+  }
+  products.push({
+    category: current,
+    product,
+  });
   res.render('menu', {
-    poducts: selectResult.rows,
+    poducts: products,
     user: req.session.user,
     cartCount: req.session.cartCount,
     customizations: selectCustomizationResult.rows,

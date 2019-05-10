@@ -17,8 +17,10 @@
     </div>
 </nav>
 <main role="main" class="container">
+    {{#each poducts}}
+    <h2>{{this.category}}</h2>
     <div class="card-columns">
-        {{#each poducts}}
+        {{#each this.product}}
         <div class="card">
             <img class="card-img-top" src="/{{this.image}}" alt="{{this.name}}">
             <div class="card-body">
@@ -35,6 +37,10 @@
             </div>
         </div>
         {{/each}}
+    </div>
+        {{/each}}
+        <h2>Custom</h2>
+    <div class="card-columns">
         <div class="card" style="witdth: 8rem;">
             <img class="card-img-top" src="/" alt="{{this.name}}">
             <div class="card-body">
